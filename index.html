@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sistema Acadêmico — Consulta de Registro</title>
+
+<style>
+:root{
+  --bg:#f4f8ff;
+  --card:#ffffff;
+  --primary:#0b3d91;
+  --secondary:#1d4ed8;
+  --border:#dbeafe;
+  --success:#16a34a;
+  --error:#dc2626;
+  --text:#111827;
+  --muted:#6b7280;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  background:var(--primary);
+  padding:20px;
+  color:#fff;
+}
+
+.wrap{
+  max-width:900px;
+  margin:auto;
+}
+
+h1{
+  margin:0;
+  font-size:20px;
+  font-weight:700;
+}
+
+.card{
+  background:var(--card);
+  margin-top:30px;
+  padding:25px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  margin-bottom:15px;
+  font-size:15px;
+}
+
+button{
+  background:var(--secondary);
+  color:#fff;
+  border:none;
+  padding:12px 18px;
+  border-radius:8px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.status{
+  display:inline-block;
+  background:#dcfce7;
+  color:var(--success);
+  padding:6px 14px;
+  border-radius:999px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+
+.field{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:10px;
+  padding:10px 0;
+  border-bottom:1px dashed var(--border);
+}
+
+.label{
+  color:var(--muted);
+  font-weight:600;
+}
+
+.value{
+  font-weight:600;
+}
+
+.error{
+  color:var(--error);
+  font-weight:600;
+  margin-top:10px;
+}
+
+@media(max-width:640px){
+  .field{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Sistema Acadêmico de Verificação</h1>
+  </div>
+</header>
+
+<main class="wrap">
+
+<div class="card">
+<h3>Consulta de Registro Acadêmico</h3>
+<input type="text" id="codigo" placeholder="Digite o número do registro">
+<button onclick="verificar()">Consultar</button>
+<div id="erro" class="error"></div>
+</div>
+
+<div class="card" id="resultado" style="display:none">
+<div class="status">● Registro Acadêmico Ativo</div>
+
+<div class="field">
+<div class="label">Nome</div>
+<div class="value" id="nome"></div>
+</div>
+
+<div class="field">
+<div class="label">Instituição</div>
+<div class="value" id="instituicao"></div>
+</div>
+
+<div class="field">
+<div class="label">Curso</div>
+<div class="value" id="curso"></div>
+</div>
+
+<div class="field">
+<div class="label">Conclusão</div>
+<div class="value" id="conclusao"></div>
+</div>
+
+<div class="field">
+<div class="label">Registro</div>
+<div class="value" id="registro"></div>
+</div>
+
+</div>
+
+</main>
+
+<script>
+const registros = {
+  "356654-77": {
+    nome: "Gislaine Borges Leal Martins",
+    instituicao: "Centro Universitário (Simulação Acadêmica)",
+    curso: "Bacharel em Psicologia",
+    conclusao: "22/12/2018",
+    registro: "356654-77"
+  }
+};
+
+function verificar(){
+  const codigo = document.getElementById("codigo").value.trim();
+  const erro = document.getElementById("erro");
+  const resultado = document.getElementById("resultado");
+
+  if(registros[codigo]){
+    const d = registros[codigo];
+
+    document.getElementById("nome").innerText = d.nome;
+    document.getElementById("instituicao").innerText = d.instituicao;
+    document.getElementById("curso").innerText = d.curso;
+    document.getElementById("conclusao").innerText = d.conclusao;
+    document.getElementById("registro").innerText = d.registro;
+
+    resultado.style.display="block";
+    erro.innerText="";
+  }else{
+    resultado.style.display="none";
+    erro.innerText="Registro não encontrado.";
+  }
+}
+</script>
+
+</body>
+</html>
